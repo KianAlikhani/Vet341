@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+{% if session['logged_in'] %}
+	{% if session['admin'] %}
+		{% include 'admin/index.html' %}
+	{% else %}
+		{% include 'user/index.html' %}
+	{% endif %}
+{% else %}
+	<head>
+		<title>Welcome Guest!</title>
+	</head>
+	<body>
+		<form action="/login" method="POST">
+			<input type="username" name="username" placeholder="Username">
+			<input type="password" name="password" placeholder="Password">
+			<input type="submit" value="Log in">
+		</form>
+	</body>
+{% endif %}
+</html>
