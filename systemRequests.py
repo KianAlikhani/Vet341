@@ -1,0 +1,1 @@
+def checkLogin(user, pass):

@@ -35,5 +35,14 @@ def getPetAppointments(animal_id, date):
     conn.close()
     return ret
 
+def checkLogin(user):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+    u = user,
+    c.execute("SELECT o_id FROM Owners where o_name=?", u)
 
-
+    ret = c.fetchone()
+    conn.close()
+    if ret is None:
+        return -1
+    return ret[0]
