@@ -13,9 +13,19 @@
   <script>
     $(function() {
       $.getJSON('/request/getUserInfo', function(data) {
+        var items = [];
+		var name = data["o_name"];
+
+		console.log(name);
+        $.each(data, function(key, val){
+          items.push("<li id='" + key + "'>" + val + "</li>" );
+		  
+        });
+        $("<ul/>", {"class": "my-new-list", html: items.join("")}).appendTo("#div1");
         console.log(data);
       });
     });
+  
   </script>
   <style type = "text/css">
 
@@ -38,7 +48,9 @@
 
   <br>
   <br>
+  <div id="div1">
   <h2>Pet Information</h2>
+  </div>
   <h2>Payment Information</h2>
   <a href='logout.html'>Logout</a>
 
