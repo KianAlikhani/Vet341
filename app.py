@@ -11,6 +11,10 @@ def index():
 	print(checkLogin("Kevin G"))
 	return render_template('index.html')
 
+@app.route('/vet')
+def vet():
+	return render_template('/templates/vet/index.html')
+
 @app.route('/login', methods=['POST'])
 def login():
 	if request.form['password'] == 'pass' and request.form['username'] == 'user':
