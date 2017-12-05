@@ -1,7 +1,82 @@
 <head>
 	<title>Welcome Admin!</title>
 </head>
+  <meta charset = "utf-8"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      
+        var inputUserData = [{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}, {"o_id": 2, "o_name": "Jane Doe", "o_address": "321 Street", "phone_number": 0987654321}];
+		
+        for (var i=0; i< inputUserData.length; i++){
+		    var o_id = inputUserData[i]["o_id"];
+		    var name = inputUserData[i]["o_name"];
+			var address = inputUserData[i]["o_address"];
+			var phone_number = inputUserData[i]["phone_number"];
+			console.log(name);
+			
+			$("<h4> Name: " + name + "</h4>").appendTo("#user");
+		    $("<p> ID: " + o_id + "</p>").appendTo("#user");
+			$("<p> address: " + address + "</p>").appendTo("#user");
+			$("<p> phone number: " + phone_number + "</p>").appendTo("#user");
+		}
+
+		 var inputPaymentData = [{"o_id": 1, "amount": 5000, "method": "Visa Card", "date": "1128", "status": "paid"}, {"o_id": 2, "amount": 200, "method": "Card", "date": "1201", "status": "Unpaid"}];
+
+		 for (var i=0; i< inputPaymentData.length; i++){
+		    var o_id = inputPaymentData[i]["o_id"];
+		    var amount = inputPaymentData[i]["amount"];
+			var method = inputPaymentData[i]["method"];
+			var date = inputPaymentData[i]["date"];
+			var status = inputPaymentData[i]["status"];
+			console.log(name);
+			
+			$("<h4> ID: " + o_id + "</h4>").appendTo("#pay");
+		    $("<p> amount: " + amount + "</p>").appendTo("#pay");
+			$("<p> method: " + method + "</p>").appendTo("#pay");
+			$("<p> date: " + date + "</p>").appendTo("#pay");
+			$("<p> status: " + status + "</p>").appendTo("#pay");
+		}
+		
+	     var inputPetData = [{"a_id": 2, "o_id": 1, "name": "Fido", "type": "Dog", "breed": "Golden Retriever"}, {"a_id": 1, "o_id": 2, "name": "Checkers", "type": "Cat", "breed": "Tabby"}];
+
+		 for (var i=0; i< inputPetData.length; i++){
+		    var a_id = inputPetData[i]["a_id"];
+		    var o_id = inputPetData[i]["o_id"];
+			var name = inputPetData[i]["name"];
+			var type = inputPetData[i]["type"];
+			var breed = inputPetData[i]["breed"];
+			console.log(name);
+			
+			$("<h4> Animal ID: " + a_id + "</h4>").appendTo("#pet");
+		    $("<p> Owner ID: " + o_id + "</p>").appendTo("#pet");
+			$("<p> Pet Name: " + name + "</p>").appendTo("#pet");
+			$("<p> Type: " + type + "</p>").appendTo("#pet");
+			$("<p> Breed: " + breed + "</p>").appendTo("#pet");
+		}
+    
+    });
+  
+  </script>
 <body>
 	<h1>Welcome Admin!</h1>
 	<a href='/logout'>Logout</a>
+	
+	<div id = "user", align = "center">
+	    <h2>User information</h2>
+	</div>
+	
+	<br>
+	<br>
+	
+	<div id = "pay", align = "center">
+	    <h2>Payment Information</h2>
+	</div>
+	
+    <br>
+	<br>
+	
+	<div id = "pet", align = "center">
+	    <h2>Pet Information</h2>
+	</div>
 </body>
