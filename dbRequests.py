@@ -13,11 +13,30 @@ def addOwner(owner_data):
     conn.close()
 
 
+def delOwner(owner_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Owners where o_id=?", (owner_id,))
+    conn.commit()
+
+    conn.close()
+
+
 def addAnimal(animal_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute("insert into Animals(a_id, o_id, a_name, type, breed) values(?,?,?,?,?)", animal_data)
+    conn.commit()
+
+    conn.close()
+
+def delAnimal(animal_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Animals where a_id=?", (animal_id,))
     conn.commit()
 
     conn.close()
@@ -28,6 +47,15 @@ def addEmployee(employee_data):
     c = conn.cursor()
 
     c.execute("insert into Employees(e_id, e_name, e_type) values(?,?,?)", employee_data)
+    conn.commit()
+
+    conn.close()
+
+def delEmployee(employee_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Employees where e_id=?", (employee_id,))
     conn.commit()
 
     conn.close()
@@ -43,11 +71,31 @@ def addProcedure(procedure_data):
     conn.close()
 
 
+def delProcedure(procedure_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Procedures where p_id=?", (procedure_id,))
+    conn.commit()
+
+    conn.close()
+
+
 def addOffice(office_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute("insert into Offices(office_id, address, manager_name) values(?,?,?)", office_data)
+    conn.commit()
+
+    conn.close()
+
+
+def delOffice(office_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Offices where office_id=?", (office_id,))
     conn.commit()
 
     conn.close()
@@ -63,11 +111,31 @@ def addPayment(payment_data):
     conn.close()
 
 
+def delPayment(payment_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Payments where r_id=?", (payment_id,))
+    conn.commit()
+
+    conn.close()
+
+
 def addAppointment(appointment_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute("insert into Appointments(a_id, e_id, date, time, p_id, office_id) values(?,?,?,?,?,?)", appointment_data)
+    conn.commit()
+
+    conn.close()
+
+
+def delAppointment(a_id, e_id, date, time):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Appointments where a_id=? and e_id=? and date=? and time=?", (a_id,e_id,date,time))
     conn.commit()
 
     conn.close()
