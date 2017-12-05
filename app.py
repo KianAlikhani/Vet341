@@ -30,7 +30,7 @@ def logout():
 @app.route('/request/getUserInfo', methods=['GET'])
 def request_getUserInfo():
 	if request.method == 'GET':
-		sampleJsonData = '{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}'
+		sampleJsonData = '[{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}, {"o_id": 2, "o_name": "Jane Doe", "o_address": "321 Street", "phone_number": 0987654321}'
 		return sampleJsonData
 
 @app.route('/request/testLogin', methods=['POST'])
