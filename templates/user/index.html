@@ -8,20 +8,38 @@
 		Welcome User!
 	</title>
 
-<meta charset = "utf-8"/>
-<style type = "text/css">
+  <meta charset = "utf-8"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      $.getJSON('/request/getUserInfo', function(data) {
+        var items = [];
+		var name = data["o_name"];
 
-  body{
-    background: white;
-    color: black;
-  }
-  h1{
-    color: blue;
-  }
-  h2{
-    color: blue;
-  }
-</style>
+		console.log(name);
+        $.each(data, function(key, val){
+          items.push("<li id='" + key + "'>" + val + "</li>" );
+		  
+        });
+        $("<ul/>", {"class": "my-new-list", html: items.join("")}).appendTo("#div1");
+        console.log(data);
+      });
+    });
+  
+  </script>
+  <style type = "text/css">
+
+    body{
+      background: white;
+      color: black;
+    }
+    h1{
+      color: blue;
+    }
+    h2{
+      color: blue;
+    }
+  </style>
 </head>
 
 <body>
@@ -30,7 +48,9 @@
 
   <br>
   <br>
+  <div id="div1">
   <h2>Pet Information</h2>
+  </div>
   <h2>Payment Information</h2>
   <a href='logout.html'>Logout</a>
 
