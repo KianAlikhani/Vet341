@@ -7,7 +7,7 @@ def addOwner(owner_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Owners(o_id, o_name, o_address, phone_number) values(?,?,?,?)", owner_data)
+    c.execute("insert into Owners(o_id, o_name, o_address, phone_number) values(null,?,?,?)", owner_data)
     conn.commit()
 
     conn.close()
@@ -27,7 +27,7 @@ def addAnimal(animal_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Animals(a_id, o_id, a_name, type, breed) values(?,?,?,?,?)", animal_data)
+    c.execute("insert into Animals(a_id, o_id, a_name, type, breed) values(null,?,?,?,?)", animal_data)
     conn.commit()
 
     conn.close()
@@ -46,7 +46,7 @@ def addEmployee(employee_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Employees(e_id, e_name, e_type) values(?,?,?)", employee_data)
+    c.execute("insert into Employees(e_id, e_name, e_type) values(null,?,?)", employee_data)
     conn.commit()
 
     conn.close()
@@ -65,7 +65,7 @@ def addProcedure(procedure_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Procedures(p_id, p_name) values(?,?)", procedure_data)
+    c.execute("insert into Procedures(p_id, p_name) values(null,?)", procedure_data)
     conn.commit()
 
     conn.close()
@@ -85,7 +85,7 @@ def addOffice(office_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Offices(office_id, address, manager_name) values(?,?,?)", office_data)
+    c.execute("insert into Offices(office_id, address, manager_name) values(null,?,?)", office_data)
     conn.commit()
 
     conn.close()
@@ -105,7 +105,7 @@ def addPayment(payment_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Payments(r_id, o_id, status, amount, method, date) values(?,?,?,?,?,?)", payment_data)
+    c.execute("insert into Payments(r_id, o_id, status, amount, method, date) values(null,?,?,?,?,?)", payment_data)
     conn.commit()
 
     conn.close()
