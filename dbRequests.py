@@ -73,6 +73,18 @@ def addAppointment(appointment_data):
     conn.close()
 
 
+def getAvailableVets(input_date, input_time):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute('''select * from Employees as e where not exists
+                (select * from Appointments as a where a.date = ? and a.time = ?)''', (input_date, input_time))
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
 def getAppointmentHistory(animal_id):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
@@ -100,6 +112,86 @@ def getPetAppointments(animal_id, date):
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.a_id=? and a.date > ?", (animal_id, date))
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getDailyAppointments(employee_id, todays_date):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("select * from Appointments as a where a.e_id=? and a.date =?", (employee_id, todays_date))
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getPreviouslyTreatedAnimals(employee_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("select a.a_id from Appointments as a where a.e_id=?", (employee_id,))
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getPerformedProcedures(employee_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("select a.p_id from Appointments as a where a.e_id=?", (employee_id,))
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getUnpaidBills():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("select * from Payments as p where p.status = 'Unpaid'")
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getCommonProcedures():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute('''select p.p_name from Procedures as p group by count(
+                  select * from Appointments as a where a.p_id = p.p_id)''')
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getAnimalsWithMostAppointments():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute('''select * from Animals as a group by count(
+                  select * from Appointments as ap where a.a_id = ap.a_id)''')
+    ret = c.fetchall()
+
+    conn.close()
+    return ret
+
+
+def getOwnersWithMultAnimals():
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute('''select * from Owners as o where count(
+                      select * from Animals as a where a.o_id = o.o_id) > 1''')
     ret = c.fetchall()
 
     conn.close()
