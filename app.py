@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, redirect, session
+from dbRequests import *
+import json
 import os
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+	print(getPaymentRecords(1))
+	print(checkLogin("Kian Alikhani"))
+	print(checkLogin("Kevin G"))
 	return render_template('index.html')
 
 @app.route('/login', methods=['POST'])
@@ -22,6 +27,17 @@ def logout():
 	session['admin'] = False
 	return redirect('/')
 
+@app.route('/request/getUserInfo', methods=['GET'])
+def request_getUserInfo():
+	if request.method == 'GET':
+		sampleJsonData = '{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}'
+		return sampleJsonData
+
+@app.route('/request/testLogin', methods=['POST'])
+def request_testLogin():
+	if request.method == 'POST':
+		print("POSTED SUCCESSFULLY!")
+	return redirect('/')
 
 if __name__ == '__main__':
 	app.secret_key = os.urandom(12)

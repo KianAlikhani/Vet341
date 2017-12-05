@@ -28,11 +28,20 @@
 	
   <h1>Welcome User!</h1>
 
-    <br>
-    <br>
+  <br>
+  <br>
   <h2>Pet Information</h2>
   <h2>Payment Information</h2>
-    <a href='logout.html'>Logout</a>
+  <a href='logout.html'>Logout</a>
+
+  <!-- KIAN'S GET AND POST REQUEST STUFF FOR FRONT END. USE THIS AS EXAMPLE -->
+  <!-- GET REQUEST EXAMPLE. THIS DATA IS WHAT YOU NEED TO PARSE USING JAVASCRIPT AND DISPLAY IT IN HTML -->
+  <a href='/request/getUserInfo'>Get User Info</a>
+
+  <!-- POST REQUEST EXAMPLE. NOTE IN CONSOLE LOG "POSTED SUCCESSFULLY! APPEARS AFTER SUBMIT IS CLICKED" -->
+  <form action="/request/testLogin" method="POST">
+    <input type="submit" value="Submit">
+  </form>
 
 </body>
 
