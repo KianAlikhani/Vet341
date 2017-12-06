@@ -7,7 +7,17 @@ def addOwner(owner_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Owners(o_id, o_name, o_address, phone_number) values(?,?,?,?)", owner_data)
+    c.execute("insert into Owners(o_id, o_name, o_address, phone_number) values(null,?,?,?)", owner_data)
+    conn.commit()
+
+    conn.close()
+
+
+def delOwner(owner_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Owners where o_id=?", (owner_id,))
     conn.commit()
 
     conn.close()
@@ -17,7 +27,16 @@ def addAnimal(animal_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Animals(a_id, o_id, a_name, type, breed) values(?,?,?,?,?)", animal_data)
+    c.execute("insert into Animals(a_id, o_id, a_name, type, breed) values(null,?,?,?,?)", animal_data)
+    conn.commit()
+
+    conn.close()
+
+def delAnimal(animal_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Animals where a_id=?", (animal_id,))
     conn.commit()
 
     conn.close()
@@ -27,7 +46,16 @@ def addEmployee(employee_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Employees(e_id, e_name, e_type) values(?,?,?)", employee_data)
+    c.execute("insert into Employees(e_id, e_name, e_type) values(null,?,?)", employee_data)
+    conn.commit()
+
+    conn.close()
+
+def delEmployee(employee_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Employees where e_id=?", (employee_id,))
     conn.commit()
 
     conn.close()
@@ -37,7 +65,17 @@ def addProcedure(procedure_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Procedures(p_id, p_name) values(?,?)", procedure_data)
+    c.execute("insert into Procedures(p_id, p_name) values(null,?)", procedure_data)
+    conn.commit()
+
+    conn.close()
+
+
+def delProcedure(procedure_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Procedures where p_id=?", (procedure_id,))
     conn.commit()
 
     conn.close()
@@ -47,7 +85,17 @@ def addOffice(office_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Offices(office_id, address, manager_name) values(?,?,?)", office_data)
+    c.execute("insert into Offices(office_id, address, manager_name) values(null,?,?)", office_data)
+    conn.commit()
+
+    conn.close()
+
+
+def delOffice(office_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Offices where office_id=?", (office_id,))
     conn.commit()
 
     conn.close()
@@ -57,7 +105,17 @@ def addPayment(payment_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
-    c.execute("insert into Payments(r_id, o_id, status, amount, method, date) values(?,?,?,?,?,?)", payment_data)
+    c.execute("insert into Payments(r_id, o_id, status, amount, method, date) values(null,?,?,?,?,?)", payment_data)
+    conn.commit()
+
+    conn.close()
+
+
+def delPayment(payment_id):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Payments where r_id=?", (payment_id,))
     conn.commit()
 
     conn.close()
@@ -73,12 +131,22 @@ def addAppointment(appointment_data):
     conn.close()
 
 
-def getAvailableVets(input_date, input_time):
+def delAppointment(a_id, e_id, date, time):
+    conn = sqlite3.connect(DB_NAME)
+    c = conn.cursor()
+
+    c.execute("delete from Appointments where a_id=? and e_id=? and date=? and time=?", (a_id,e_id,date,time))
+    conn.commit()
+
+    conn.close()
+
+
+def getAvailableVets(input_id, input_date, input_time):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute('''select * from Employees as e where not exists
-                (select * from Appointments as a where a.date = ? and a.time = ?)''', (input_date, input_time))
+                (select * from Appointments as a where a.e_id = e.e_id and a.date = ? and a.time = ?)''', (input_date, input_time))
     ret = c.fetchall()
 
     conn.close()
