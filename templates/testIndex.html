@@ -13,7 +13,12 @@
 		        data: {"e_id": 1},
 		        async: false}
 		    );
-			console.log(dA.responseText);
+			var parsedResponse = JSON.parse(dA.responseText);
+			for (var i = 0; i < parsedResponse.length; i++) {
+				var object = parsedResponse[i];
+				console.log(object);
+				console.log(object['a_id'])
+			}
 			/*var pR = $.get("/request/getPaymentRecords", {"o_id": o_id});
 			console.log(pR)
 			var aV = $.get("/request/getAvailableVets");

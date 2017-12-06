@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-{% if session['logged_in'] %}
-	{% if session['admin'] %}
-		{% include 'admin/index.html' %}
-	{% else %}
-		{% include 'user/index.html' %}
-	{% endif %}
+{% if session['admin'] %}
+	{% include 'admin/index.html' %}
+{% elif session['e_id'] != -1 %}
+	{% include 'vet/index.html' %}
+{% elif session['o_id'] != -1 %}
+	{% include 'user/index.html' %}
 {% else %}
 	<head>
 		<title>Welcome Guest!</title>
@@ -14,8 +14,8 @@
 	    <h1>Welcome to Kevin's Specialty Care! Login to see your information.</h1>
 
 		<form action="/login" method="POST">
-			<input type="username" name="username" placeholder="Username">
-			<input type="password" name="password" placeholder="Password">
+			<input type="username" name="username" placeholder="Name">
+			<!--input type="password" name="password" placeholder="Password"-->
 			<input type="submit" value="Log in">
 		</form>
 
