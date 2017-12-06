@@ -141,12 +141,12 @@ def delAppointment(a_id, e_id, date, time):
     conn.close()
 
 
-def getAvailableVets(input_date, input_time):
+def getAvailableVets(input_id, input_date, input_time):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
 
     c.execute('''select * from Employees as e where not exists
-                (select * from Appointments as a where a.date = ? and a.time = ?)''', (input_date, input_time))
+                (select * from Appointments as a where a.e_id = e.e_id and a.date = ? and a.time = ?)''', (input_date, input_time))
     ret = c.fetchall()
 
     conn.close()
