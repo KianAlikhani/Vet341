@@ -4,11 +4,17 @@
 <head>
 	<script>
 		$(document).ready(function() {
-			var o_id = {{ session['o_id'] }}
-			console.log(o_id)
-			var dA = $.get("/request/getDailyAppointments", {"e_id": 1});
-			console.log(dA)
-			var pR = $.get("/request/getPaymentRecords", {"o_id": o_id});
+			var o_id = {{ session['o_id'] }};
+			console.log(o_id);
+			//var dA = $.get("/request/getDailyAppointments", {"e_id": 1}, async: false);
+			var dA = $.ajax({
+		        type: 'GET',
+		        url: "/request/getDailyAppointments",
+		        data: {"e_id": 1},
+		        async: false}
+		    );
+			console.log(dA.responseText);
+			/*var pR = $.get("/request/getPaymentRecords", {"o_id": o_id});
 			console.log(pR)
 			var aV = $.get("/request/getAvailableVets");
 			console.log(aV)
@@ -16,6 +22,20 @@
 			console.log(oP)
 			var aH = $.get("/request/getAppointmentHistory", {"o_id": o_id});
 			console.log(aH)
+			var pA = $.get("/request/getPetAppointments", {"o_id": o_id});
+			console.log(pA)
+			var pP = $.get("/request/getPerformedProcedures", {"e_id": 1});
+			console.log(pP)
+			var pTA = $.get("/request/getPreviouslyTreatedAnimals", {"e_id": 1});
+			console.log(pTA)
+			var uB = $.get("/request/getUnpaidBills");
+			console.log(uB)
+			var cP = $.get("/request/getCommonProcedures");
+			console.log(cP)
+			var oMA = $.get("/request/getOwnersWithMultAnimals");
+			console.log(oMA)
+			var aMA = $.get("/request/getAnimalsWithMostAppointments");
+			console.log(aMA)*/
 		});
 	</script>
 

@@ -66,7 +66,6 @@ def request_getAppointmentHistory():
 	ret = []
 	for pet in pets:
 		ret.append(getAppointmentHistory(pet['a_id']))
-	print(ret)
 	return jsonify(ret)
 
 @app.route('/request/getPaymentRecords', methods=['GET'])
@@ -74,6 +73,16 @@ def request_getPaymentRecords():
 	o_id = request.args.get('o_id')
 	paymentRecords = getPaymentRecords(o_id)
 	return jsonify(paymentRecords)
+
+@app.route('/request/getPetAppointments', methods=['GET'])
+def request_getPetAppointments():
+	monthDay = getMonthDay()
+	o_id = request.args.get('o_id')
+	pets = getOwnersPets(o_id)
+	ret = []
+	for pet in pets:
+		ret.append(getPetAppointments(pet['a_id'], monthDay))
+	return jsonify(ret)
 
 # Vet Methods
 @app.route('/request/getDailyAppointments', methods=['GET'])
@@ -85,6 +94,42 @@ def request_getDailyAppointments():
 	dA = getDailyAppointments(e_id, monthday)
 	#return '{"e_id": 1, "a_id": 1y}'
 	return jsonify(dA)
+
+@app.route('/request/getPerformedProcedures', methods=['GET'])
+def request_getPerformedProcedures():
+	e_id = request.args.get('e_id')
+	performedProcedures = getPerformedProcedures(e_id)
+	return jsonify(performedProcedures)
+
+@app.route('/request/getPreviouslyTreatedAnimals', methods=['GET'])
+def request_getPreviouslyTreatedAnimals():
+	e_id = request.args.get('e_id')
+	prevTreatedAnimals = getPreviouslyTreatedAnimals(e_id)
+	return jsonify(prevTreatedAnimals)
+
+# Admin Methods
+
+@app.route('/request/getUnpaidBills', methods=['GET'])
+def request_getUnpaidBills():
+	unpaidBills = getUnpaidBills()
+	return jsonify(unpaidBills)
+
+@app.route('/request/getCommonProcedures', methods=['GET'])
+def request_getCommonProcedures():
+	commonProcedures = getCommonProcedures()
+	return jsonify(commonProcedures)
+
+@app.route('/request/getAnimalsWithMostAppointments', methods=['GET'])
+def request_getAnimalsWithMostAppointments():
+	animalsMostAppointments = getAnimalsWithMostAppointments()
+	return jsonify(animalsMostAppointments)
+
+@app.route('/request/getOwnersWithMultAnimals', methods=['GET'])
+def request_getOwnersWithMultAnimals():
+	ownersWithMultAnimals = getOwnersWithMultAnimals()
+	return jsonify(ownersWithMultAnimals)
+
+
 
 def parseDateTime(now):
 	return (int(str(now.month).zfill(2) + str(now.day).zfill(2)), parseHourMinute(now, timedelta(minutes=15)))

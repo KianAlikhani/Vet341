@@ -211,7 +211,7 @@ def getPetAppointments(animal_id, date):
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
-    c.execute("select * from Appointments as a where a.a_id=? and a.date > ?", (animal_id, date))
+    c.execute("select * from Appointments as a where a.a_id=? and a.date >= ?", (animal_id, date))
     rows = c.fetchall()
     ret = []
     for r in rows:
