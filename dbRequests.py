@@ -3,6 +3,10 @@ import sqlite3
 DB_NAME = 'test.db'
 
 
+def dict_from_row(row):
+    return dict(zip(row.keys(), row))
+
+
 def addOwner(owner_data):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
@@ -147,7 +151,10 @@ def getAvailableVets(input_id, input_date, input_time):
 
     c.execute('''select * from Employees as e where not exists
                 (select * from Appointments as a where a.e_id = e.e_id and a.date = ? and a.time = ?)''', (input_date, input_time))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -158,7 +165,10 @@ def getAppointmentHistory(animal_id):
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.a_id=?", (animal_id,))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -169,7 +179,10 @@ def getPaymentRecords(user_id):
     c = conn.cursor()
 
     c.execute("select * from Payments as p where p.o_id=?", (user_id,))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -180,7 +193,10 @@ def getPetAppointments(animal_id, date):
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.a_id=? and a.date > ?", (animal_id, date))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -191,7 +207,10 @@ def getDailyAppointments(employee_id, todays_date):
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.e_id=? and a.date =?", (employee_id, todays_date))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -202,7 +221,10 @@ def getPreviouslyTreatedAnimals(employee_id):
     c = conn.cursor()
 
     c.execute("select a.a_id from Appointments as a where a.e_id=?", (employee_id,))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -213,7 +235,10 @@ def getPerformedProcedures(employee_id):
     c = conn.cursor()
 
     c.execute("select a.p_id from Appointments as a where a.e_id=?", (employee_id,))
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -224,7 +249,10 @@ def getUnpaidBills():
     c = conn.cursor()
 
     c.execute("select * from Payments as p where p.status = 'Unpaid'")
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -236,7 +264,10 @@ def getCommonProcedures():
 
     c.execute('''select p.p_name from Procedures as p group by count(
                   select * from Appointments as a where a.p_id = p.p_id)''')
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -248,7 +279,10 @@ def getAnimalsWithMostAppointments():
 
     c.execute('''select * from Animals as a group by count(
                   select * from Appointments as ap where a.a_id = ap.a_id)''')
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
@@ -260,7 +294,10 @@ def getOwnersWithMultAnimals():
 
     c.execute('''select * from Owners as o where count(
                       select * from Animals as a where a.o_id = o.o_id) > 1''')
-    ret = c.fetchall()
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
 
     conn.close()
     return ret
