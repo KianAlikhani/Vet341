@@ -145,7 +145,7 @@ def delAppointment(a_id, e_id, date, time):
     conn.close()
 
 
-def getAvailableVets(input_id, input_date, input_time):
+def getAvailableVets(input_date, input_time):
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
