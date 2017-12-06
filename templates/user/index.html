@@ -61,7 +61,7 @@
 		  $("<p> Vet: " + e_name + "</p>").appendTo("#aV");
 		  $("<p> Type: " + e_type + "</p>").appendTo("#aV");
 	    }
-       
+       $("<h1>Welcome User " + o_id + "! </h1>").appendTo("#welcome");
 	   //pet appt
 	   for( var i=0; i<parsedPA.length; i++){
 		  var object = parsedPA[i];
@@ -137,7 +137,8 @@
 </head>
 
 <body>
-   <h1> Welcome User! </h1>
+   <div id = "welcome">
+   </div>
    
    <div id = "oP", align = "center">
      <h2>Your Pets</h2>
