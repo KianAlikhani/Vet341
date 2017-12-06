@@ -13,7 +13,6 @@
 		    var name = inputUserData[i]["o_name"];
 			var address = inputUserData[i]["o_address"];
 			var phone_number = inputUserData[i]["phone_number"];
-			console.log(name);
 			
 			$("<h4> Name: " + name + "</h4>").appendTo("#user");
 		    $("<p> ID: " + o_id + "</p>").appendTo("#user");
@@ -29,7 +28,6 @@
 			var method = inputPaymentData[i]["method"];
 			var date = inputPaymentData[i]["date"];
 			var status = inputPaymentData[i]["status"];
-			console.log(name);
 			
 			$("<h4> ID: " + o_id + "</h4>").appendTo("#pay");
 		    $("<p> amount: " + amount + "</p>").appendTo("#pay");
@@ -46,13 +44,25 @@
 			var name = inputPetData[i]["name"];
 			var type = inputPetData[i]["type"];
 			var breed = inputPetData[i]["breed"];
-			console.log(name);
 			
 			$("<h4> Animal ID: " + a_id + "</h4>").appendTo("#pet");
 		    $("<p> Owner ID: " + o_id + "</p>").appendTo("#pet");
 			$("<p> Pet Name: " + name + "</p>").appendTo("#pet");
 			$("<p> Type: " + type + "</p>").appendTo("#pet");
 			$("<p> Breed: " + breed + "</p>").appendTo("#pet");
+		}
+		
+	     var inputEmpData = [{"e_id": 1, "e_name": "Kevin", "e_type": "Vet"},{"e_id": 2, "e_name": "Andrew", "e_type": "Nurse"}];
+
+		 for (var i=0; i< inputEmpData.length; i++){
+		    var e_id = inputEmpData[i]["e_id"];
+		    var e_name = inputEmpData[i]["e_name"];
+			var e_type = inputEmpData[i]["e_type"];
+			console.log(name);
+			
+			$("<h4> Employee Name: " + e_name + "</h4>").appendTo("#emp");
+		    $("<p> Employee ID: " + e_id + "</p>").appendTo("#emp");
+			$("<p> Employee Type: " + e_type + "</p>").appendTo("#emp");
 		}
     
     });
@@ -78,5 +88,9 @@
 	
 	<div id = "pet", align = "center">
 	    <h2>Pet Information</h2>
+	</div>
+	
+	<div id = "emp", align = "center">
+	    <h2>Vet Information</h2>
 	</div>
 </body>

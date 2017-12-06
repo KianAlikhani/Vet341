@@ -12,20 +12,22 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
     $(function() {
-      $.getJSON('/request/getUserInfo', function(data) {
-        var items = [];
-		var name = data["o_name"];
-
+      
+      var inputUserData = [{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}, {"o_id": 2, "o_name": "Jane Doe", "o_address": "321 Street", "phone_number": 0987654321}];
+		
+      for (var i=0; i< inputUserData.length; i++){
+		var o_id = inputUserData[i]["o_id"];
+		var name = inputUserData[i]["o_name"];
+		var address = inputUserData[i]["o_address"];
+		var phone_number = inputUserData[i]["phone_number"];
 		console.log(name);
-        $.each(data, function(key, val){
-          items.push("<li id='" + key + "'>" + val + "</li>" );
-		  
-        });
-        $("<ul/>", {"class": "my-new-list", html: items.join("")}).appendTo("#div1");
-        console.log(data);
-      });
-    });
-  
+			
+		$("<h4> Name: " + name + "</h4>").appendTo("#name");
+		$("<p> ID: " + o_id + "</p>").appendTo("#name");
+		$("<p> address: " + address + "</p>").appendTo("#name");
+		$("<p> phone number: " + phone_number + "</p>").appendTo("#name");
+	  }
+     });
   </script>
   <style type = "text/css">
 
@@ -43,15 +45,21 @@
 </head>
 
 <body>
-	
-  <h1>Welcome User!</h1>
-
-  <br>
-  <br>
-  <div id="div1">
-  <h2>Pet Information</h2>
+  <div id = "name"
+    <h1>Welcome User!</h1>
   </div>
-  <h2>Payment Information</h2>
+  
+  
+  <br>
+  <br>
+  
+  <div id="pet">
+    <h2>Pet Information</h2>
+  </div>
+  
+  <div id = "pay">
+    <h2>Payment Information</h2>
+  </div>
   <a href='logout.html'>Logout</a>
 
   <!-- KIAN'S GET AND POST REQUEST STUFF FOR FRONT END. USE THIS AS EXAMPLE -->
