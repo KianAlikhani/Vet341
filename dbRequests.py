@@ -147,6 +147,7 @@ def delAppointment(a_id, e_id, date, time):
 
 def getAvailableVets(input_id, input_date, input_time):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute('''select * from Employees as e where not exists
@@ -162,6 +163,7 @@ def getAvailableVets(input_id, input_date, input_time):
 
 def getAppointmentHistory(animal_id):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.a_id=?", (animal_id,))
@@ -176,6 +178,7 @@ def getAppointmentHistory(animal_id):
 
 def getPaymentRecords(user_id):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select * from Payments as p where p.o_id=?", (user_id,))
@@ -190,6 +193,7 @@ def getPaymentRecords(user_id):
 
 def getPetAppointments(animal_id, date):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.a_id=? and a.date > ?", (animal_id, date))
@@ -204,6 +208,7 @@ def getPetAppointments(animal_id, date):
 
 def getDailyAppointments(employee_id, todays_date):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select * from Appointments as a where a.e_id=? and a.date =?", (employee_id, todays_date))
@@ -218,6 +223,7 @@ def getDailyAppointments(employee_id, todays_date):
 
 def getPreviouslyTreatedAnimals(employee_id):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select a.a_id from Appointments as a where a.e_id=?", (employee_id,))
@@ -232,6 +238,7 @@ def getPreviouslyTreatedAnimals(employee_id):
 
 def getPerformedProcedures(employee_id):
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select a.p_id from Appointments as a where a.e_id=?", (employee_id,))
@@ -246,6 +253,7 @@ def getPerformedProcedures(employee_id):
 
 def getUnpaidBills():
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute("select * from Payments as p where p.status = 'Unpaid'")
@@ -260,6 +268,7 @@ def getUnpaidBills():
 
 def getCommonProcedures():
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute('''select p.p_name from Procedures as p group by count(
@@ -275,6 +284,7 @@ def getCommonProcedures():
 
 def getAnimalsWithMostAppointments():
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute('''select * from Animals as a group by count(
@@ -290,6 +300,7 @@ def getAnimalsWithMostAppointments():
 
 def getOwnersWithMultAnimals():
     conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
     c.execute('''select * from Owners as o where count(
