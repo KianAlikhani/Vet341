@@ -11,6 +11,7 @@ def index():
 
 @app.route('/test')
 def testIndex():
+	session['o_id'] = 1
 	return render_template('testIndex.html')
 
 @app.route('/vet')
@@ -50,6 +51,23 @@ def request_testLogin():
 def request_getAvailableVets():
 	monthDay, hourMin = parseDateTime(datetime.now())
 	return jsonify(getAvailableVets(monthDay, hourMin))
+
+@app.route('/request/getOwnersPets', methods=['GET'])
+def request_getOwnersPets():
+	o_id = request.args.get('o_id')
+	pets = getOwnersPets(o_id)
+	jsonPets = jsonify(pets)
+	return jsonPets
+
+@app.route('/request/getAppointmentHistory', methods=['GET'])
+def request_getAppointmentHistory():
+	o_id = request.args.get('o_id')
+	pets = getOwnersPets(o_id)
+	ret = []
+	for pet in pets:
+		ret.append(getAppointmentHistory(pet['a_id']))
+	print(ret)
+	return jsonify(ret)
 
 @app.route('/request/getPaymentRecords', methods=['GET'])
 def request_getPaymentRecords():

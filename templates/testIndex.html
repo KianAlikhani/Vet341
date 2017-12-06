@@ -8,12 +8,14 @@
 			console.log(o_id)
 			var dA = $.get("/request/getDailyAppointments", {"e_id": 1});
 			console.log(dA)
-			var pR = $.get("/request/getPaymentRecords", {o_id: 1});
+			var pR = $.get("/request/getPaymentRecords", {"o_id": o_id});
 			console.log(pR)
 			var aV = $.get("/request/getAvailableVets");
 			console.log(aV)
-			var oP = $.get("/request/getOwnersPets", {o_id: 1});
+			var oP = $.get("/request/getOwnersPets", {"o_id": o_id});
 			console.log(oP)
+			var aH = $.get("/request/getAppointmentHistory", {"o_id": o_id});
+			console.log(aH)
 		});
 	</script>
 
