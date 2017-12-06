@@ -1,0 +1,92 @@
+<head>
+	<title>Welcome Vet!</title>
+</head>
+  <meta charset = "utf-8"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+
+        var inputUserData = [{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}, {"o_id": 2, "o_name": "Jane Doe", "o_address": "321 Street", "phone_number": 0987654321}];
+
+        for (var i=0; i< inputUserData.length; i++){
+		    	var o_id = inputUserData[i]["o_id"];
+		    	var name = inputUserData[i]["o_name"];
+					var address = inputUserData[i]["o_address"];
+					var phone_number = inputUserData[i]["phone_number"];
+					console.log(name);
+
+					$("<h4> Name: " + name + "</h4>").appendTo("#user");
+		    	$("<p> ID: " + o_id + "</p>").appendTo("#user");
+					$("<p> address: " + address + "</p>").appendTo("#user");
+					$("<p> phone number: " + phone_number + "</p>").appendTo("#user");
+		}
+
+	     var inputPetData = [{"a_id": 2, "o_id": 1, "name": "Fido", "type": "Dog", "breed": "Golden Retriever"}, {"a_id": 1, "o_id": 2, "name": "Checkers", "type": "Cat", "breed": "Tabby"}];
+
+		 for (var i=0; i< inputPetData.length; i++){
+		    var a_id = inputPetData[i]["a_id"];
+		    var o_id = inputPetData[i]["o_id"];
+				var name = inputPetData[i]["name"];
+				var type = inputPetData[i]["type"];
+				var breed = inputPetData[i]["breed"];
+				console.log(name);
+
+				$("<h4> Animal ID: " + a_id + "</h4>").appendTo("#pet");
+		    $("<p> Owner ID: " + o_id + "</p>").appendTo("#pet");
+				$("<p> Pet Name: " + name + "</p>").appendTo("#pet");
+				$("<p> Type: " + type + "</p>").appendTo("#pet");
+				$("<p> Breed: " + breed + "</p>").appendTo("#pet");
+			}
+
+		var inputEmployeeData = [{"e_id": 1, "e_name": "Kevin", "e_type": "Vet"}, {"e_id": 2, "e_name": "Andrew", "e_type": "Nurse"}];
+
+		for (var i=0; i< inputEmployeeData.length; i++){
+			var e_id = inputEmployeeData[i]["e_id"];
+			var e_name = inputEmployeeData[i]["e_name"];
+	 		var e_type = inputEmployeeData[i]["e_type"];
+	 		console.log(name);
+
+	 		$("<h4> Employee ID: " + e_id + "</h4>").appendTo("#employee");
+			$("<p> Employee Name: " + e_name + "</p>").appendTo("#employee");
+	 		$("<p> Employee Type: " + e_type + "</p>").appendTo("#employee");
+ 		}
+
+		var inputAppointmentData = [{"date": "5/16/17","time": "4:30pm"}, {"date": "5/17/17","time": "8:00am"}];
+
+		for (var i=0; i< inputAppointmentData.length; i++){
+			var date = inputAppointmentData[i]["date"];
+			var time = inputAppointmentData[i]["time"];
+
+	 		console.log(name);
+
+	 		$("<h4> Date: " + date + "</h4>").appendTo("#appointment");
+			$("<p> Time: " + time + "</p>").appendTo("#appointment");
+
+ 		}
+
+    });
+
+  </script>
+<body>
+	<h1>Welcome Vet!</h1>
+	<a href='/logout'>Logout</a>
+
+	<div id = "user", align = "center">
+	    <h2>User information</h2>
+	</div>
+
+	<br>
+	<div id = "employee", align = "center">
+	    <h2>Employee information</h2>
+	</div>
+	<br>
+
+	<div id = "appointment", align = "center">
+	    <h2>Open Appointment information</h2>
+	</div>
+	<br>
+
+	<div id = "pet", align = "center">
+	    <h2>Pet Information</h2>
+	</div>
+</body>
