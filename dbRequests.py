@@ -329,11 +329,10 @@ def getOwnersWithMultAnimals():
     return ret
 
 
-def checkLogin(user):
+def checkOwner(user):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
-    u = user,
-    c.execute("SELECT o_id FROM Owners where o_name=?", u)
+    c.execute("SELECT o_id FROM Owners where o_name=?", (user,))
 
     ret = c.fetchone()
     conn.close()
@@ -341,3 +340,5 @@ def checkLogin(user):
         return -1
     return ret[0]
 
+def checkEmployee(e_id):
+    return -1

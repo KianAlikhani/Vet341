@@ -7,12 +7,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	session['o_id'] = 1
 	return render_template('index.html')
 
 @app.route('/test')
 def testIndex():
-	session['o_id'] = 1
 	return render_template('testIndex.html')
 
 @app.route('/vet')
@@ -21,17 +19,22 @@ def vet():
 
 @app.route('/login', methods=['POST'])
 def login():
-	if request.form['password'] == 'pass' and request.form['username'] == 'user':
-		session['logged_in'] = True
-		session['admin'] = False
-	elif request.form['password'] == 'pass' and request.form['username'] == 'admin':
-		session['logged_in'] = True
+	o_id = checkOwner(request.form['username'])
+	e_id = checkEmployee(request.form['username'])
+	print(o_id, e_id, request.form['username'])
+	if o_id != -1:
+		session['o_id'] = o_id
+		print(session['o_id'])
+	elif e_id != -1:
+		session['e_id'] = e_id
+	elif request.form['username'] == 'admin':
 		session['admin'] = True
 	return redirect('/')
 
 @app.route('/logout')
 def logout():
-	session['logged_in'] = False
+	session['o_id'] = -1
+	session['e_id'] = -1
 	session['admin'] = False
 	return redirect('/')
 
