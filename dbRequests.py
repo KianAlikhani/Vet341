@@ -145,6 +145,21 @@ def delAppointment(a_id, e_id, date, time):
     conn.close()
 
 
+def getOwnersPets(user_id):
+    conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
+    c = conn.cursor()
+
+    c.execute("select * from Animals as a where a.o_id=?", (user_id,))
+    rows = c.fetchall()
+    ret = []
+    for r in rows:
+        ret.append(dict_from_row(r))
+
+    conn.close()
+    return ret
+
+
 def getAvailableVets(input_date, input_time):
     conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
