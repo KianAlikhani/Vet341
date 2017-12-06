@@ -1,14 +1,12 @@
 from flask import Flask, render_template, request, redirect, session, jsonify
 from dbRequests import *
-from datetime import date
+from datetime import datetime, date, timedelta
 import json
 import os
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-	print(getPaymentRecords(1))
-	print(checkLogin("Kian Alikhani"))
 	return render_template('index.html')
 
 @app.route('/test')
@@ -47,23 +45,38 @@ def request_testLogin():
 		print("POSTED SUCCESSFULLY!")
 	return redirect('/')
 
-@app.route('/request/getDailyAppointments', methods=['GET', 'POST'])
+# Owner Methods
+@app.route('/request/getAvailableVets', methods=['GET'])
+def request_getAvailableVets():
+	monthDay, hourMin = parseDateTime(datetime.now())
+	return jsonify(getAvailableVets(monthDay, hourMin))
+
+@app.route('/request/getPaymentRecords', methods=['GET'])
+def request_getPaymentRecords():
+	o_id = request.args.get('o_id')
+	paymentRecords = getPaymentRecords(o_id)
+	return jsonify(paymentRecords)
+
+# Vet Methods
+@app.route('/request/getDailyAppointments', methods=['GET'])
 def request_getDailyAppointments():
 	today = date.today()
 	#monthday = int(str(today.month).zfill(2) + str(today.day).zfill(2))
 	monthday = 1201
-	e_id = 1
+	e_id = request.args.get('e_id')
 	dA = getDailyAppointments(e_id, monthday)
 	#return '{"e_id": 1, "a_id": 1y}'
 	return jsonify(dA)
-	
-def tupleToDict(row):
-    tempEvent = defaultEvent.copy()
-    x = 0
-    for name in eventTable:
-        tempEvent[name] = row[x]
-        x += 1
-    return tempEvent
+
+def parseDateTime(now):
+	return (int(str(now.month).zfill(2) + str(now.day).zfill(2)), parseHourMinute(now, timedelta(minutes=15)))
+
+def parseHourMinute(now, delta):
+	return int(str(now.hour % 12) + str((now + (datetime.min - now) % delta).minute).zfill(2))
+
+def getMonthDay():
+	today = date.today()
+	return int(str(today.month).zfill(2) + str(today.day).zfill(2))
 
 if __name__ == '__main__':
 	app.secret_key = os.urandom(12)
