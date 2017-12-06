@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from dbRequests import *
+from datetime import date
 import json
 import os
 app = Flask(__name__)
@@ -8,8 +9,11 @@ app = Flask(__name__)
 def index():
 	print(getPaymentRecords(1))
 	print(checkLogin("Kian Alikhani"))
-	print(checkLogin("Kevin G"))
 	return render_template('index.html')
+
+@app.route('/test')
+def testIndex():
+	return render_template('testIndex.html')
 
 @app.route('/vet')
 def vet():
@@ -42,6 +46,24 @@ def request_testLogin():
 	if request.method == 'POST':
 		print("POSTED SUCCESSFULLY!")
 	return redirect('/')
+
+@app.route('/request/getDailyAppointments', methods=['GET', 'POST'])
+def request_getDailyAppointments():
+	today = date.today()
+	#monthday = int(str(today.month).zfill(2) + str(today.day).zfill(2))
+	monthday = 1201
+	e_id = 1
+	dA = getDailyAppointments(e_id, monthday)
+	#return '{"e_id": 1, "a_id": 1y}'
+	return jsonify(dA)
+	
+def tupleToDict(row):
+    tempEvent = defaultEvent.copy()
+    x = 0
+    for name in eventTable:
+        tempEvent[name] = row[x]
+        x += 1
+    return tempEvent
 
 if __name__ == '__main__':
 	app.secret_key = os.urandom(12)
