@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
-{% if session['admin'] %}
-	{% include 'admin/index.html' %}
-{% elif session['e_id'] != -1 %}
-	{% include 'vet/index.html' %}
-{% elif session['o_id'] != -1 %}
-	{% include 'user/index.html' %}
+{% if session['logged_in'] %}
+	{% if session['admin'] %}
+		{% include 'admin/index.html' %}
+	{% elif session['e_id'] and session['e_id'] != -1 %}
+		{% include 'vet/index.html' %}
+	{% elif session['o_id'] and session['o_id'] != -1 %}
+		{% include 'user/index.html' %}
+	{% endif %}
 {% else %}
 	<head>
 		<title>Welcome Guest!</title>

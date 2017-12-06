@@ -15,20 +15,21 @@ def testIndex():
 
 @app.route('/vet')
 def vet():
-	return render_template('/templates/vet/index.html')
+	return render_template('vet/index.html')
 
 @app.route('/login', methods=['POST'])
 def login():
 	o_id = checkOwner(request.form['username'])
 	e_id = checkEmployee(request.form['username'])
-	print(o_id, e_id, request.form['username'])
 	if o_id != -1:
 		session['o_id'] = o_id
-		print(session['o_id'])
+		session['logged_in'] = True
 	elif e_id != -1:
 		session['e_id'] = e_id
+		session['logged_in'] = True
 	elif request.form['username'] == 'admin':
 		session['admin'] = True
+		session['logged_in'] = True
 	return redirect('/')
 
 @app.route('/logout')
@@ -36,6 +37,7 @@ def logout():
 	session['o_id'] = -1
 	session['e_id'] = -1
 	session['admin'] = False
+	session['logged_in'] = False
 	return redirect('/')
 
 @app.route('/request/getUserInfo', methods=['GET'])

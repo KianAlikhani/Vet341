@@ -340,5 +340,20 @@ def checkOwner(user):
         return -1
     return ret[0]
 
-def checkEmployee(e_id):
-    return -1
+def checkEmployee(employee):
+    splitEmployee = employee.split()
+    employeeName = ""
+    if splitEmployee[0] == "vet":
+        employeeName = " ".join(splitEmployee[1:])
+
+        conn = sqlite3.connect(DB_NAME)
+        c = conn.cursor()
+        c.execute("SELECT e_id FROM Employees where e_name=?", (employeeName,))
+
+        ret = c.fetchone()
+        conn.close()
+        if ret is None:
+            return -1
+        return ret[0]
+    else:
+        return -1
