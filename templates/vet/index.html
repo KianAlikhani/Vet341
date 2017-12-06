@@ -6,26 +6,27 @@
   <script>
 
     $(document).ready(function() {
-			
+	  var e_id = {{ session['e_id'] }};			
 	  //daily appts
 	  var dA = $.ajax({
+
 		   type: 'GET',
 		   url: "/request/getDailyAppointments",
-		   data: {},
+		   data: {"e_id": e_id},
 		   async: false}
 		);
 		//performed proc
 	  var pP = $.ajax({
 		   type: 'GET',
 		   url: "/request/getPerformedProcedures",
-		   data: {},
+		   data: {"e_id": e_id},
 		   async: false}
 		);		
 		//previously treated animals
 	  var pT = $.ajax({
 		   type: 'GET',
 		   url: "/request/getPreviouslyTreatedAnimals",
-		   data: {},
+		   data: {"e_id": e_id},
 		   async: false}
 		);	
 
@@ -39,25 +40,46 @@
 		  var object = parsedDA[i];
 		  console.log(object);
 		  var a_id = object['a_id'];
+		  var date = object['date'];
+		  var office_id = object['office_id'];
+		  var time = object['time'];
+		  var p_id = object['p_id'];
+		  if (p_id == 1)
+		    p_name = "Check-Up";
+		  else if (p_id ==2)
+		    p_name = "Teeth Cleaning";
+		  else
+		    p_name = "Vaccination";
 
-		  $("<h4> Animal ID: " + a_id + "</h4>").appendTo("#dA");
+		  $("<h4> Date: " + date + " at " + time + " PM." + "</h4>").appendTo("#dA");
+		  $("<p> Procedure : " + p_name + "</p>").appendTo("#dA");
+		  $("<p> Office Number : " + office_id + "</p>").appendTo("#dA");
+		  $("<p> Animal ID : " + a_id + "</p>").appendTo("#dA");
+		  
+		  
+		  
+		  
 		  
 	    }
        
 	   //performed procedures
 	   for( var i=0; i<parsedPP.length; i++){
 		  var object = parsedPP[i];
-		  var e_id = object['e_id'];
-		  var p_name = object['p_name'];
-		  
-		  $("<p> Employee ID: " + e_id + "</p>").appendTo("#pP");
-		  $("<p>" + p_name + "</p>").appendTo("#pP");
+		  console.log(object);
+		  var p_id = object['p_id'];
+		  var p_name;
+		  if (p_id == 1)
+		    p_name = "Check-Up";
+		  else if (p_id ==2)
+		    p_name = "Teeth Cleaning";
+		  else
+		    p_name = "Vaccination";
+		  $("<p> Procedure : " + p_name + "</p>").appendTo("#pP");
 	    }
-		
        //prev treated animals
 	   for( var i=0; i<parsedPT.length; i++){
 		  var object = parsedPT[i];
-		  
+		  console.log(object);
 		  var a_id = object['a_id'];
 		  $("<h4> Animal ID: " + a_id + "</h4>").appendTo("#pT");
 		 
