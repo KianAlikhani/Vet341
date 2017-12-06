@@ -11,23 +11,115 @@
   <meta charset = "utf-8"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script>
-    $(function() {
-      
-      var inputUserData = [{"o_id": 1, "o_name": "John Doe", "o_address": "123 Street", "phone_number": 1234567890}, {"o_id": 2, "o_name": "Jane Doe", "o_address": "321 Street", "phone_number": 0987654321}];
+     $(document).ready(function() {
+	 var o_id = {{ session['o_id'] }};
+	 console.log(o_id);
+	 //var dA = $.get("/request/getDailyAppointments", {"e_id": 1}, async: false);
+	 var aH = $.ajax({
+		   type: 'GET',
+		   url: "/request/getAppointmentHistory",
+		   data: {"o_id": o_id},
+		   async: false}
+		);
+	 var oP = $.ajax({
+		   type: 'GET',
+		   url: "/request/getOwnersPets",
+		   data: {"o_id": o_id},
+		   async: false}
+		);		
 		
-      for (var i=0; i< inputUserData.length; i++){
-		var o_id = inputUserData[i]["o_id"];
-		var name = inputUserData[i]["o_name"];
-		var address = inputUserData[i]["o_address"];
-		var phone_number = inputUserData[i]["phone_number"];
-		console.log(name);
-			
-		$("<h4> Name: " + name + "</h4>").appendTo("#name");
-		$("<p> ID: " + o_id + "</p>").appendTo("#name");
-		$("<p> address: " + address + "</p>").appendTo("#name");
-		$("<p> phone number: " + phone_number + "</p>").appendTo("#name");
-	  }
-     });
+	 var pR = $.ajax({
+		   type: 'GET',
+		   url: "/request/getPaymentRecords",
+		   data: {"o_id": o_id},
+		   async: false}
+		);	
+	 var pA = $.ajax({
+		   type: 'GET',
+		   url: "/request/getPetAppointments",
+		   data: {"o_id": o_id},
+		   async: false}
+		);
+		var aV = $.ajax({
+		   type: 'GET',
+		   url: "/request/getAvailableVets",
+		   data: {},
+		   async: false}
+		);
+
+		var parsedAH = JSON.parse(aH.responseText);		
+		var parsedAV = JSON.parse(aV.responseText);
+		var parsedPA = JSON.parse(pA.responseText);
+		var parsedPR = JSON.parse(pR.responseText);
+
+		var parsedOP = JSON.parse(oP.responseText);
+		
+		for( var i=0; i<parsedAV.length; i++){
+		  var object = parsedAV[i];
+		  var e_name = object['e_name'];
+		  var e_type = object['e_type'];
+		  $("<p> Vet: " + e_name + "</p>").appendTo("#aV");
+		  $("<p> Type: " + e_type + "</p>").appendTo("#aV");
+	    }
+       
+	   //pet appt
+	   for( var i=0; i<parsedPA.length; i++){
+		  var object = parsedPA[i];
+		  console.log(object);
+		  var a_id = object['a_id'];
+		  console.log(a_id)
+		  var date = object['date'];
+		  var office_id = object['office_id'];
+		  var e_id = object['e_id'];
+		  $("<h4> Animal ID: " + a_id + "</h4>").appendTo("#pA");
+		  $("<p> Date and Time: " + date + "</p>").appendTo("#pA");
+		  $("<p> Office Number: " + office_id + "</p>").appendTo("#pA");
+		  $("<p> Employee Number: " + e_id + "</p>").appendTo("#pA");
+		  
+	    }
+       
+	   //payment records
+	   for( var i=0; i<parsedPR.length; i++){
+		  var object = parsedPR[i];
+		  var amount = object['amount'];
+		  var date = object['date'];
+		  var method = object['method'];
+		  
+		  
+		  $("<h4> Payment Date: " + date + "</h4>").appendTo("#pR");
+		  $("<p> Amount: " + amount + "</p>").appendTo("#pR");
+		  $("<p> Method: " + method + "</p>").appendTo("#pR");
+	    }
+		
+       //appt history
+	   for( var i=0; i<parsedAH.length; i++){
+		  var object = parsedAH[i];
+		  var a_id = object['a_id'];
+		  var date = object['date'];
+		  var time = object['time'];
+		  var office_id = object['office_id'];
+		  var e_id = object['e_id'];
+		  $("<h4> Animal ID: " + a_id + "</h4>").appendTo("#aH");
+		  $("<p> Date: " + date + "</p>").appendTo("#aH");
+		  $("<p> Office Number: " + office_id + "</p>").appendTo("#aH");
+		  $("<p> Employee Number: " + e_id + "</p>").appendTo("#aH");
+	    }
+		
+       //pets id name breed type
+	   for( var i=0; i<parsedOP.length; i++){
+		  var object = parsedOP[i];
+		  console.log(object);
+
+		  var type = object['type'];
+		  var name = object['a_name'];
+		  var breed = object['breed'];
+		  $("<p> Animal Type: " + type + "</p>").appendTo("#oP");
+		  $("<p> Pet name: " + name + "</p>").appendTo("#oP");
+          $("<p> Breed: " + breed + "</p><br>").appendTo("#oP");
+
+		  
+	    }
+       });
   </script>
   <style type = "text/css">
 
@@ -45,26 +137,46 @@
 </head>
 
 <body>
-  <div id = "name"
-    <h1>Welcome User!</h1>
-  </div>
+   <h1> Welcome User! </h1>
+   
+   <div id = "oP", align = "center">
+     <h2>Your Pets</h2>
+   </div>
+   
+   <br>
+   <br>
+   
+   <div id = "pR", align = "center">
+     <h2>Payment Records</h2>
+   </div>
   
+   <br>
+   <br>
+   
+   <div id = "pA", align = "center">
+     <h2>Pet Appointments</h3>
+   </div>
+   
+   <br>
+   <br>
+   
+   <div id = "aV", align = "center">
+     <h2>Available Vets</h2>
+   </div>
+   
   
+   <br>
+   <br>
+  
+   <div id = "aH", align = "center">
+     <h2>Appointment History</h2>
+   </div>
   <br>
   <br>
   
-  <div id="pet">
-    <h2>Pet Information</h2>
-  </div>
-  
-  <div id = "pay">
-    <h2>Payment Information</h2>
-  </div>
-  <a href='logout.html'>Logout</a>
+  <a href='/logout'>Logout</a>
 
   <!-- KIAN'S GET AND POST REQUEST STUFF FOR FRONT END. USE THIS AS EXAMPLE -->
-  <!-- GET REQUEST EXAMPLE. THIS DATA IS WHAT YOU NEED TO PARSE USING JAVASCRIPT AND DISPLAY IT IN HTML -->
-  <a href='/request/getUserInfo'>Get User Info</a>
 
   <!-- POST REQUEST EXAMPLE. NOTE IN CONSOLE LOG "POSTED SUCCESSFULLY! APPEARS AFTER SUBMIT IS CLICKED" -->
   <form action="/request/testLogin" method="POST">
