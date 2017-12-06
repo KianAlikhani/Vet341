@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+	session['o_id'] = 1
 	return render_template('index.html')
 
 @app.route('/test')
