@@ -286,8 +286,8 @@ def getCommonProcedures():
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
-    c.execute('''select p.p_name from Procedures as p group by count(
-                  select * from Appointments as a where a.p_id = p.p_id)''')
+    c.execute('''select p.p_name from Procedures as p group by (
+                  select count(*) from Appointments as a where a.p_id = p.p_id)''')
     rows = c.fetchall()
     ret = []
     for r in rows:
@@ -302,8 +302,8 @@ def getAnimalsWithMostAppointments():
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
-    c.execute('''select * from Animals as a group by count(
-                  select * from Appointments as ap where a.a_id = ap.a_id)''')
+    c.execute('''select * from Animals as a group by (
+                  select count(*) from Appointments as ap where a.a_id = ap.a_id)''')
     rows = c.fetchall()
     ret = []
     for r in rows:
@@ -318,8 +318,8 @@ def getOwnersWithMultAnimals():
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
 
-    c.execute('''select * from Owners as o where count(
-                      select * from Animals as a where a.o_id = o.o_id) > 1''')
+    c.execute('''select * from Owners as o where (
+                      select count(*) from Animals as a where a.o_id = o.o_id) > 1''')
     rows = c.fetchall()
     ret = []
     for r in rows:
